@@ -6,7 +6,7 @@
 
 - name: "Force Burp reinstall"
   file:
-    path: "{{ download_dir }}"
+    path: "{{ burp_download_dir }}"
     state: absent
   when: burp_force_reinstall | bool
 
@@ -30,26 +30,16 @@
   register: burp_unarchive
 
 - name: "Autoreconf source files"
-  command:
-    cmd: autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
-  args:
-    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
-  changed_when: false
+  shell: cd {{ burp_download_dir }}/{{ burp_src } && autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
 
 - name: "./configure"
-  command:
-    cmd: "{{ burp_configure_line }}"
+  shell: cd {{ burp_download_dir }}/{{ burp_src }} && {{ burp_configure_line }}
   args:
-    chdir: " {{ burp_download_dir }}/{{ burp_src }}"
     creates: "{{ burp_download_dir }}/{{ burp_src }}/Makefile"
-  changed_when: false
 
 - name: "Make"
   command:
-    cmd: make creates={{ burp_download_dir }}/{{ burp_src }}/burp
-  args:
-    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
-  changed_when: false
+  shell: cd {{ burp_download_dir }}/{{ burp_src }} && make creates={{ burp_download_dir }}/{{ burp_src }}/burp
 
 - name: "Does Burp already exists ?"
   stat:
@@ -57,20 +47,12 @@
   register: burp_is_installed
 
 - name: "Uninstall Burp binary, before reinstall"
-  command:
-    cmd: make uninstall removes={{ burp_bin_path }}
-  args:
-    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
+  shell: cd {{ burp_download_dir }}/{{ burp_src }} && make uninstall removes={{ burp_bin_path }}
   when: burp_is_installed.stat.exists and burp_unarchive.changed
-  changed_when: false
 
 - name: "Make install"
-  command:
-    cmd: make install creates={{ burp_bin_path }}
-  args:
-    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
+  shell: cd {{ burp_download_dir }}/{{ burp_src }} && make install creates={{ burp_bin_path }}
   notify: Restart burp-server
-  changed_when: false
 
 - name: "Create configurations folders"
   file:

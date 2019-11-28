@@ -30,7 +30,7 @@
   register: burp_unarchive
 
 - name: "Autoreconf source files"
-  shell: cd {{ burp_download_dir }}/{{ burp_src } && autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
+  shell: cd {{ burp_download_dir }}/{{ burp_src }} && autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
 
 - name: "./configure"
   shell: cd {{ burp_download_dir }}/{{ burp_src }} && {{ burp_configure_line }}

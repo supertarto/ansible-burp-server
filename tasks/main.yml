@@ -1,2 +1,30 @@
 ---
+- name: "Import OS specific variables."
+  include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Define build dependencies by OS
+  set_fact:
+    build_dependencies: "{{ __build_dependencies | list }}"
+  when: build_dependencies is not defined
+
+- include: build_burp.yml
+
+- include: config_burp.yml
+
+- include: autoupgrade.yml
+  when: burp_server_autoupgrade_enabled
+
+- include: local_client.yml
+
+- include: service.yml
+
+- name: "Wait for BurpCA certificates"
+  wait_for:
+    path: "{{ item }}"
+    state: present
+  with_items:
+    - '{{ burp_server_etc }}/ssl_cert_ca-server.pem'
+    - '{{ burp_server_etc }}/ssl_cert-server.key'
+    - '{{ burp_server_etc }}/ssl_cert-server.pem'
+
+- include: remove_client.yml

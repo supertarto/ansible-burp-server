@@ -1,0 +1,26 @@
+---
+__build_dependencies:
+  - make
+  - pkg-config
+  - check
+  - g++
+  - librsync-dev
+  - libncurses5-dev
+  - libz-dev
+  - libssl-dev
+  - uthash-dev
+  - libyajl-dev
+  - autoconf
+  - automake
+  - libtool
+  - dh-autoreconf
+  - unzip      
+  - openssl     
+  - libncurses5 
+  - libgcc1     
+  - libc6       
+  - libacl1    
+  - libssl1.1   
+  - libtinfo5   
+  - zlib1g      
+  - locales

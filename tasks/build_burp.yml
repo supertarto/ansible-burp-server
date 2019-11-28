@@ -1,0 +1,88 @@
+---
+- name: "Install requirements"
+  package:
+    name: "{{ build_dependencies | join(',') }}"
+    state: present
+
+- name: "Force Burp reinstall"
+  file:
+    path: "{{ download_dir }}"
+    state: absent
+  when: burp_force_reinstall | bool
+
+- name: "Does burp download file exist?"
+  file:
+    path: "{{ burp_download_dir }}"
+    state: directory
+
+- name: "Download Burp"
+  get_url:
+    url: "{{ burp_url }}"
+    dest: "{{ burp_download_dir }}/{{ burp_src }}.{{ burp_srcext }}"
+    timeout: 30
+    validate_certs: no
+
+- name: "Unarchive Burp"
+  unarchive:
+    src: "{{ burp_download_dir }}/{{ burp_src }}.{{ burp_srcext }}"
+    dest: "{{ burp_download_dir }}/"
+    remote_src: yes
+  register: burp_unarchive
+
+- name: "Autoreconf source files"
+  command:
+    cmd: autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
+  args:
+    chdirs: "{{ burp_download_dir }}/{{ burp_src }}"
+
+- name: "./configure"
+  command:
+    cmd: "{{ burp_configure_line }}"
+  args:
+    chdirs: " {{ burp_download_dir }}/{{ burp_src }}"
+    creates: "{{ burp_download_dir }}/{{ burp_src }}/Makefile"
+
+- name: "Make"
+  command:
+    cmd: make creates={{ burp_download_dir }}/{{ burp_src }}/burp
+  args:
+    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
+
+- name: "Does Burp already exists ?"
+  stat:
+    path: "{{ burp_bin_path }}"
+  register: burp_is_installed
+
+- name: "Uninstall Burp binary, before reinstall"
+  command:
+    cmd: make uninstall removes={{ burp_bin_path }}
+  args:
+    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
+  when: burp_is_installed.stat.exists and burp_unarchive.changed
+
+- name: "Make install"
+  command:
+    cmd: make install creates={{ burp_bin_path }}
+  args:
+    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
+  notify: Restart burp-server
+
+- name: "Create configurations folders"
+  file:
+    path: "{{ item }}"
+    recurse: yes
+    state: directory
+  with_items:
+    - '{{ burp_client_ca_csr_dir }}'
+    - '{{ burp_data_backup }}'
+    - '{{ burp_clientconf_path }}'
+    - '{{ burp_clientconf_path_dir }}'
+    - '{{ burp_server_autoupgrade_dir }}'
+    - '{{ burp_clientconf_path_dir_incexc }}'
+
+- name: "copy etc file"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+  - { src: "build/CA.cnf.j2", dest: "{{ burp_server_ca_conf }}" }

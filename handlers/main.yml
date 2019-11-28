@@ -1,2 +1,5 @@
 ---
-
+- name: Restart burp-server
+  service:
+    name: burp-server
+    state: restarted

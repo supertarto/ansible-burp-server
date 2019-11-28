@@ -1,0 +1,15 @@
+#
+# Include
+#
+
+{% for include in item.include_regexp %}
+include = {{ include }}
+{% endfor %}
+
+#
+# Exclude
+#
+
+{% for exclude in item.exclude_regexp %}
+exclude_regex = {{ exclude }}
+{% endfor %}

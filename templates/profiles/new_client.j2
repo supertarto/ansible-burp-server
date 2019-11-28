@@ -1,0 +1,3 @@
+password = {{ item.password | default(burp_client_password) }}
+
+. {{ burp_clientconf_path_dir_incexc }}/{{ item.profile | default(include) }}

@@ -1,0 +1,26 @@
+---
+- name: "Delete default clientconfdir"
+  file:
+    path: "/etc/burp/clientconfdir"
+    state: absent
+  notify:
+    - Restart burp-server
+
+- name: "Copy burp-server.conf"
+  template:
+    src: "burp-server.conf.j2"
+    dest: "{{ burp_server_etc }}/burp-server.conf"
+  notify: Restart burp-server
+
+- name: "Copy include files"
+  template:
+    src: profiles/profileTemplate.j2
+    dest: "{{ burp_clientconf_path_dir_incexc }}/{{ item.name }}"
+  with_items: "{{ burp_incexc_templates }}"
+  notify: Restart burp-server
+
+- name: "Create client's configurations"
+  template:
+    src: profiles/new_client.j2
+    dest: "{{ burp_clientconf_path_dir }}/{{ item.name }}"
+  with_items: "{{ burp_add_clients | default([]) }}"

@@ -11,7 +11,7 @@
 ## Examples
 ## Installation
 ```
-ansible-galaxy install supertarto.
+ansible-galaxy install supertarto.burp-server
 ```
 ## License
 GPL V3.0

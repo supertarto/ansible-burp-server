@@ -1,5 +1,7 @@
 ---
 burp_force_reinstall: false
+burp_server_autoupgrade_enabled: true
+
 burp_download_dir: "{{ ansible_env.HOME }}/burp"
 
 # .tar.gz, or zip

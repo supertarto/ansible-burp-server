@@ -38,7 +38,6 @@
     creates: "{{ burp_download_dir }}/{{ burp_src }}/Makefile"
 
 - name: "Make"
-  command:
   shell: cd {{ burp_download_dir }}/{{ burp_src }} && make creates={{ burp_download_dir }}/{{ burp_src }}/burp
 
 - name: "Does Burp already exists ?"

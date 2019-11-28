@@ -14,13 +14,13 @@ __build_dependencies:
   - automake
   - libtool
   - dh-autoreconf
-  - unzip      
-  - openssl     
-  - libncurses5 
-  - libgcc1     
-  - libc6       
-  - libacl1    
-  - libssl1.1   
-  - libtinfo5   
-  - zlib1g      
+  - unzip
+  - openssl
+  - libncurses5
+  - libgcc1
+  - libc6
+  - libacl1
+  - libssl1.1
+  - libtinfo5
+  - zlib1g
   - locales

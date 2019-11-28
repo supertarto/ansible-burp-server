@@ -1,8 +1,12 @@
+---
 burp_download_dir: "{{ ansible_env.HOME }}/burp"
 
-burp_srcext: "zip" # .tar.gz, or zip
-burp_version: "2.2.18" # branch or tag github, For exemple: "master", "2.0.46"
-burp_configure_line: "./configure" # Doc CFLAGS here: https://github.com/grke/burp/wiki/Performance-Tips#optional-compile-time-improvements
+# .tar.gz, or zip
+burp_srcext: "zip"
+# branch or tag github, For exemple: "master", "2.0.46"
+burp_version: "2.2.18"
+# Doc CFLAGS here: https://github.com/grke/burp/wiki/Performance-Tips#optional-compile-time-improvements
+burp_configure_line: "./configure"
 burp_usr_path: '/usr/local'
 burp_bin_path: "{{ burp_usr_path }}/sbin/burp"
 
@@ -18,14 +22,14 @@ burp_clientconf_path_dir_incexc: "{{ burp_clientconf_path_dir }}/incexc"
 burp_client_ca_csr_dir: "{{ burp_server_etc }}/CA-client"
 
 ######################
-## Configurations
+# Configurations
 ######################
 
 burp_incexc_templates:
   - name: includeW7
     include_regexp: []
     exclude_regexp: []
-  
+
   - name: includeW10
     include_regexp: []
     exclude_regexp: []
@@ -37,12 +41,12 @@ burp_incexc_templates:
   - name: includeDebianDesktop
     include_regexp: []
     exclude_regexp: []
-    
+
 
 ############
-## BURP SERVER
+# BURP SERVER
 ############
-#Service (systemd)
+# Service (systemd)
 burp_sv_server_command: "{{ burp_bin_path }} -c {{ burp_server_etc }}/burp-server.conf -F"
 burp_sv_server_user: "root"
 
@@ -51,7 +55,7 @@ burp_server_address: "0.0.0.0"
 burp_server_port: 4971
 burp_server_status_port: 4972
 
-## Conf file:
+# Conf file:
 burp_server_listen: "{{ burp_server_address }}:{{ burp_server_port }}"
 burp_server_listen_status: "127.0.0.1:{{ burp_server_status_port }}"
 burp_server_dedup_group: global
@@ -98,7 +102,7 @@ burp_notify_failure_email_from: "Burp_Backup"
 burp_restore_super_clients:
   - monitor
 ###############
-## List of client to install
+# List of client to install
 ###############
 burp_add_clients: []
 #  - name: client1
@@ -106,13 +110,13 @@ burp_add_clients: []
 #    password: password
 
 ##############
-## List of client to remove
+# List of client to remove
 ##############
 burp_remove_clients: []
 # - name: client40
 
 ##############
-## Autoupgrade
+# Autoupgrade
 ##############
 burp_autoupgrade_version: "2.2.18"
 burp_autoupgrade_package_copy:

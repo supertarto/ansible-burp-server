@@ -1,5 +1,5 @@
 # ansible-role-template
-
+[![Build Status](https://travis-ci.org/supertarto/ansible-burp-server.svg?branch=master)](https://travis-ci.org/supertarto/ansible-burp-server)
 
 ## Tested plateform
 * Debian 9 (Stretch)

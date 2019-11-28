@@ -20,13 +20,13 @@
     url: "{{ burp_url }}"
     dest: "{{ burp_download_dir }}/{{ burp_src }}.{{ burp_srcext }}"
     timeout: 30
-    validate_certs: no
+    validate_certs: false
 
 - name: "Unarchive Burp"
   unarchive:
     src: "{{ burp_download_dir }}/{{ burp_src }}.{{ burp_srcext }}"
     dest: "{{ burp_download_dir }}/"
-    remote_src: yes
+    remote_src: true
   register: burp_unarchive
 
 - name: "Autoreconf source files"
@@ -70,7 +70,7 @@
 - name: "Create configurations folders"
   file:
     path: "{{ item }}"
-    recurse: yes
+    recurse: true
     state: directory
   with_items:
     - '{{ burp_client_ca_csr_dir }}'
@@ -85,4 +85,4 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-  - { src: "build/CA.cnf.j2", dest: "{{ burp_server_ca_conf }}" }
+    - {src: "build/CA.cnf.j2", dest: "{{ burp_server_ca_conf }}"}

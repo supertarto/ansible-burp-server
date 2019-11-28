@@ -11,13 +11,13 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { src: "autoupgrade_script", dest: "{{ burp_server_autoupgrade_dir }}/win64/script" }
+    - {src: "autoupgrade_script", dest: "{{ burp_server_autoupgrade_dir }}/win64/script"}
 
 - name: Download packages
   get_url:
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
     timeout: 30
-    validate_certs: no
+    validate_certs: false
   with_items:
     - "{{ burp_autoupgrade_package_copy }}"

@@ -33,20 +33,23 @@
   command:
     cmd: autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
   args:
-    chdirs: "{{ burp_download_dir }}/{{ burp_src }}"
+    chdir: "{{ burp_download_dir }}/{{ burp_src }}"
+  changed_when: false
 
 - name: "./configure"
   command:
     cmd: "{{ burp_configure_line }}"
   args:
-    chdirs: " {{ burp_download_dir }}/{{ burp_src }}"
+    chdir: " {{ burp_download_dir }}/{{ burp_src }}"
     creates: "{{ burp_download_dir }}/{{ burp_src }}/Makefile"
+  changed_when: false
 
 - name: "Make"
   command:
     cmd: make creates={{ burp_download_dir }}/{{ burp_src }}/burp
   args:
     chdir: "{{ burp_download_dir }}/{{ burp_src }}"
+  changed_when: false
 
 - name: "Does Burp already exists ?"
   stat:
@@ -59,6 +62,7 @@
   args:
     chdir: "{{ burp_download_dir }}/{{ burp_src }}"
   when: burp_is_installed.stat.exists and burp_unarchive.changed
+  changed_when: false
 
 - name: "Make install"
   command:
@@ -66,6 +70,7 @@
   args:
     chdir: "{{ burp_download_dir }}/{{ burp_src }}"
   notify: Restart burp-server
+  changed_when: false
 
 - name: "Create configurations folders"
   file:

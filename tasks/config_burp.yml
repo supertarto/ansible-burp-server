@@ -14,7 +14,7 @@
 
 - name: "Copy include files"
   template:
-    src: profiles/profileTemplate.j2
+    src: incexc/IncludeTemplate.j2
     dest: "{{ burp_clientconf_path_dir_incexc }}/{{ item.name }}"
   with_items: "{{ burp_incexc_templates }}"
   notify: Restart burp-server

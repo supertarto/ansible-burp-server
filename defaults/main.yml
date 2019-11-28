@@ -1,4 +1,5 @@
 ---
+burp_force_reinstall: false
 burp_download_dir: "{{ ansible_env.HOME }}/burp"
 
 # .tar.gz, or zip

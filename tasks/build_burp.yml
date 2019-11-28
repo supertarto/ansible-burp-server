@@ -48,6 +48,8 @@
 - name: "Uninstall Burp binary, before reinstall"
   shell: cd {{ burp_download_dir }}/{{ burp_src }} && make uninstall removes={{ burp_bin_path }}
   when: burp_is_installed.stat.exists and burp_unarchive.changed
+  tags:
+    - skip_ansible_lint
 
 - name: "Make install"
   shell: cd {{ burp_download_dir }}/{{ burp_src }} && make install creates={{ burp_bin_path }}

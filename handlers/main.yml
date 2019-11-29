@@ -1,6 +1,8 @@
 ---
 - name: Reload systemctl daemon
   command: systemctl daemon reload
+  tags:
+    - skip_ansible_lint
 
 - name: Restart burp-server
   service:

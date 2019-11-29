@@ -6,3 +6,6 @@
   notify:
     - Reload systemctl daemon
     - Activate Burp service
+
+- name: Flush handlers
+  meta: flush_handlers

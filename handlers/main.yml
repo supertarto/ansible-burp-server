@@ -4,6 +4,12 @@
   tags:
     - skip_ansible_lint
 
+- name: "Activate Burp service"
+  service:
+    name: burp-server
+    state: started
+    enabled: true
+
 - name: Restart burp-server
   service:
     name: burp-server

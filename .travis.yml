@@ -8,7 +8,6 @@ env:
   matrix:
     - MOLECULE_DISTRIB: debian10:latest
     - MOLECULE_DISTRIB: debian9:latest
-
 install:
   - pip install molecule docker
 

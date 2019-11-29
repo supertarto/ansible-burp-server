@@ -1,4 +1,7 @@
 ---
+- name: Reload systemctl daemon
+  command: systemctl daemon reload
+
 - name: Restart burp-server
   service:
     name: burp-server

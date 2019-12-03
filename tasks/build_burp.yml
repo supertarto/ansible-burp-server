@@ -29,9 +29,9 @@
     dest: "{{ burp_download_dir }}/"
     remote_src: true
   register: burp_unarchive
-   when: burp_dl.changed
+  when: burp_dl.changed
   tags:
-    - skip_ansible_lint 
+    - skip_ansible_lint
 
 - name: "Autoreconf source files"
   shell: cd {{ burp_download_dir }}/{{ burp_src }} && autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure

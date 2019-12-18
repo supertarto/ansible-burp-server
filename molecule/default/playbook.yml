@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: supertarto.burp-server
+  vars:
+    burp_client_ssl_peer_cn: "TestClient1"

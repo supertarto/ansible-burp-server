@@ -157,7 +157,7 @@ burp_client_ssl_peer_cn: "{{ ansible_hostname }}"
 
 ## Installation
 ```
-ansible-galaxy install supertarto.burp-server
+ansible-galaxy install supertarto.burp_server
 ```
 ## License
 GPL V3.0

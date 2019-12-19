@@ -1,5 +1,6 @@
 # Ansible Burp-server
 [![Build Status](https://travis-ci.org/supertarto/ansible-burp-server.svg?branch=master)](https://travis-ci.org/supertarto/ansible-burp-server)
+
 Install and configure Burp backup Server with Ansible. This role is meant to suits my need and is inspired by https://github.com/CoffeeITWorks/ansible_burp2_server
 If you want a more complete role, go check it!
 

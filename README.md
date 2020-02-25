@@ -5,7 +5,6 @@ Install and configure Burp backup Server with Ansible. This role is meant to sui
 If you want a more complete role, go check it!
 
 ## Tested plateform
-* Debian 9 (Stretch)
 * Debian 10 (Buster)
 
 ## Role variables

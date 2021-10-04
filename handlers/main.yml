@@ -1,15 +1,15 @@
 ---
 - name: Reload systemctl daemon
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
 
 - name: "Activate Burp service"
-  service:
+  ansible.builtin.service:
     name: burp-server
     state: started
     enabled: true
 
 - name: Restart burp-server
-  service:
+  ansible.builtin.service:
     name: burp-server
     state: restarted

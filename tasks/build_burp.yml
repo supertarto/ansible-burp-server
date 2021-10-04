@@ -1,22 +1,22 @@
 ---
 - name: "Install requirements"
-  package:
+  ansible.builtin.package:
     name: "{{ build_dependencies | join(',') }}"
     state: present
 
 - name: "Force Burp reinstall"
-  file:
+  ansible.builtin.file:
     path: "{{ burp_download_dir }}"
     state: absent
   when: burp_force_reinstall | bool
 
 - name: "Does burp download file exist?"
-  file:
+  ansible.builtin.file:
     path: "{{ burp_download_dir }}"
     state: directory
 
 - name: "Download Burp"
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ burp_url }}"
     dest: "{{ burp_download_dir }}/{{ burp_src }}.{{ burp_srcext }}"
     timeout: 30
@@ -24,7 +24,7 @@
   register: burp_dl
 
 - name: "Unarchive Burp"
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ burp_download_dir }}/{{ burp_src }}.{{ burp_srcext }}"
     dest: "{{ burp_download_dir }}/"
     remote_src: true
@@ -34,33 +34,33 @@
     - skip_ansible_lint
 
 - name: "Autoreconf source files"
-  shell: cd {{ burp_download_dir }}/{{ burp_src }} && autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
+  ansible.builtin.shell: cd {{ burp_download_dir }}/{{ burp_src }} && autoreconf -vif creates={{ burp_download_dir }}/{{ burp_src }}/configure
 
 - name: "./configure"
-  shell: cd {{ burp_download_dir }}/{{ burp_src }} && {{ burp_configure_line }}
+  ansible.builtin.shell: cd {{ burp_download_dir }}/{{ burp_src }} && {{ burp_configure_line }}
   args:
     creates: "{{ burp_download_dir }}/{{ burp_src }}/Makefile"
 
 - name: "Make"
-  shell: cd {{ burp_download_dir }}/{{ burp_src }} && make creates={{ burp_download_dir }}/{{ burp_src }}/burp
+  ansible.builtin.shell: cd {{ burp_download_dir }}/{{ burp_src }} && make creates={{ burp_download_dir }}/{{ burp_src }}/burp
 
 - name: "Does Burp already exists ?"
-  stat:
+  ansible.builtin.stat:
     path: "{{ burp_bin_path }}"
   register: burp_is_installed
 
 - name: "Uninstall Burp binary, before reinstall"
-  shell: cd {{ burp_download_dir }}/{{ burp_src }} && make uninstall removes={{ burp_bin_path }}
+  ansible.builtin.shell: cd {{ burp_download_dir }}/{{ burp_src }} && make uninstall removes={{ burp_bin_path }}
   when: burp_is_installed.stat.exists and burp_unarchive.changed
   tags:
     - skip_ansible_lint
 
 - name: "Make install"
-  shell: cd {{ burp_download_dir }}/{{ burp_src }} && make install creates={{ burp_bin_path }}
+  ansible.builtin.shell: cd {{ burp_download_dir }}/{{ burp_src }} && make install creates={{ burp_bin_path }}
   notify: Restart burp-server
 
 - name: "Create configurations folders"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     recurse: true
     state: directory
@@ -73,7 +73,7 @@
     - '{{ burp_clientconf_path_dir_incexc }}'
 
 - name: "copy etc file"
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:

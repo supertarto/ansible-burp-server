@@ -1,20 +1,20 @@
 ---
 - name: Create auto-upgrade folder for client
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
   with_items:
     - "{{ burp_server_autoupgrade_dir }}/win64/{{ burp_autoupgrade_version }}"
 
 - name: Copy auto-upgrade scripts
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
     - {src: "autoupgrade_script", dest: "{{ burp_server_autoupgrade_dir }}/win64/script"}
 
 - name: Download packages
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
     timeout: 30

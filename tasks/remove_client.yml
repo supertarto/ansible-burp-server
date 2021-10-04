@@ -1,24 +1,24 @@
 ---
 - name: "Remove clients file in clientconfdir"
-  file:
+  ansible.builtin.file:
     path: "{{ burp_server_clientconfdir }}/{{ item.name }}"
     state: absent
   with_items: "{{ burp_remove_clients }}"
 
 - name: "Delete clients data folder"
-  file:
+  ansible.builtin.file:
     path: "{{ burp_data_backup }}/{{ item.name }}"
     state: absent
   with_items: "{{ burp_remove_clients }}"
 
 - name: "Delete clients certificate"
-  file:
+  ansible.builtin.file:
     path: "{{ burp_server_etc }}/CA/{{ item.name }}.crt"
     state: absent
   with_items: "{{ burp_remove_clients }}"
 
 - name: "Delete client CSR"
-  file:
+  ansible.builtin.file:
     path: "{{ burp_server_etc }}/CA/{{ item.name }}.csr"
     state: absent
   with_items: "{{ burp_remove_clients }}"

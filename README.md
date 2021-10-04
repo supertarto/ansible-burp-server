@@ -7,6 +7,7 @@ If you want a more complete role, go check it!
 
 ## Tested plateform
 * Debian 10 (Buster)
+* Debian 11 (Bulleyes)
 
 ## Role variables
 Boolean variables: Do we force the reinstallation of Burp? Do we enable the autoupgrade feature?

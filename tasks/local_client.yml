@@ -1,15 +1,15 @@
 ---
 - name: "Create CA folder for supervisor"
-  file:
+  ansible.builtin.file:
     path: "{{ burp_client_ca_csr_dir }}"
     state: directory
 
 - name: "Configure local client"
-  template:
+  ansible.builtin.template:
     src: burp.conf.j2
     dest: "{{ burp_server_etc }}/burp.conf"
 
 - name: "Add local client in clientconfdir"
-  template:
+  ansible.builtin.template:
     src: monitor.j2
     dest: "{{ burp_clientconf_path_dir }}/monitor"

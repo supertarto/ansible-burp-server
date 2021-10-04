@@ -10,7 +10,7 @@ name: CI
 
 defaults:
   run:
-    working-directory: 'supertarto.burp-server'
+    working-directory: 'supertarto.burp_server'
 
 jobs:
 
@@ -21,7 +21,7 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
-          path: 'supertarto.burp-server'
+          path: 'supertarto.burp_server'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
@@ -48,7 +48,7 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
-          path: 'supertarto.burp-server'
+          path: 'supertarto.burp_server'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2

@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   roles:
-    - role: supertarto.burp-server
+    - role: supertarto.burp_server
   vars:
     burp_client_ssl_peer_cn: "TestClient1"

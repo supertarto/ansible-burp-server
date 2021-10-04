@@ -5,7 +5,7 @@
 
 - name: "Activate Burp service"
   ansible.builtin.service:
-    name: burp-server
+    name: burp_server
     state: started
     enabled: true
 
